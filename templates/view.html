@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-<div>{{ post.content | safe }}</div>
-{% if post.image_filename %}
-<img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" width="300">
-{% endif %}
-<a href="{{ url_for('edit_post', post_id=post.id) }}">編集</a>
-<form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" style="display:inline">
-  <button type="submit">削除</button>
-</form>
-<a href="{{ url_for('index') }}">戻る</a>
+  <h1>{{ post.title }}</h1>
+  <div class="meta">{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+  {% if post.image_filename %}
+    <img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" width="400">
+  {% endif %}
+  <div style="margin-top:12px;">{{ post.content | safe }}</div>
+
+  <p style="margin-top:12px;">
+    <a class="btn" href="{{ url_for('edit_post', post_id=post.id) }}">編集</a>
+    <form method="post" action="{{ url_for('delete_post', post_id=post.id) }}" style="display:inline">
+      <button class="btn" type="submit">削除</button>
+    </form>
+    <a href="{{ url_for('index') }}" style="margin-left:12px">戻る</a>
+  </p>
 {% endblock %}
