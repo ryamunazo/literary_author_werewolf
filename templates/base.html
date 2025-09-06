@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}メモランダム{% endblock %}</title>
+  <style>
+    body{font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial;padding:24px;max-width:880px;margin:0 auto;background:#f7f7f8;color:#111}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    a{color:#0366d6;text-decoration:none}
+    .card{background:white;padding:18px;border-radius:8px;box-shadow:0 1px 4px rgba(20,20,40,.06);margin-bottom:12px}
+    .meta{color:#666;font-size:0.9rem}
+    form input[type="text"]{width:100%;padding:8px;font-size:1.05rem;margin-bottom:8px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:6px;background:#0366d6;color:white;text-decoration:none}
+  </style>
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <header>
+    <div>
+      <a href="{{ url_for('index') }}"><strong>SimpleNote（仮）</strong></a>
+    </div>
+    <nav>
+      <a class="btn" href="{{ url_for('new_post') }}">新規投稿</a>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="card">
+      {% for m in messages %}
+        <div>{{ m }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

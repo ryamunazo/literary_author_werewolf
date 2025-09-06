@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}投稿一覧{% endblock %}
+
+{% block content %}
+  <h1>投稿一覧</h1>
+  {% for p in posts %}
+    <div class="card" style="margin-bottom:16px; padding:12px;">
+      <h2><a href="{{ url_for('view_post', post_id=p.id) }}">{{ p.title }}</a></h2>
+      <div class="meta">{{ p.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+
+      <!-- 画像表示 -->
+      {% if p.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' ~ p.image_filename) }}" width="200" style="margin-top:8px;">
+      {% else %}
+        <div style="width:200px; height:150px; background:#ccc; margin-top:8px; display:inline-block;"></div>
+      {% endif %}
+
+      <!-- 投稿内容（300文字まで） -->
+      <div style="margin-top:8px;">
+        {{ p.content | safe | truncate(30) }}
+      </div>
+    </div>
+  {% else %}
+    <p>まだ投稿がありません。</p>
+  {% endfor %}
+{% endblock %}
